@@ -73,6 +73,7 @@ public class BoardMain {
 					break;
 				case 2:
 					boardEvents = boardJob.updateBasic(boardEvents);
+					break;
 				case 3:
 					boardNotices = boardJob.updateBasic(boardNotices);
 				default:
@@ -82,10 +83,13 @@ public class BoardMain {
 			} else if (selectedMenu == 3) {
 				switch (selectedType) {
 				case 1:
+					boardBasics = boardJob.removeOne(boardBasics);
 					break;
 				case 2:
+					boardEvents = boardJob.removeOne(boardEvents);
 					break;
 				case 3:
+					boardNotices = boardJob.removeOne(boardNotices);
 					break;
 				default:
 					break;

@@ -4,15 +4,14 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class BoardJob {
-	
+
 	// 게시판 저장을 위한 임시 String 객체
 	String[] boardTemp = new String[4];
 	Scanner sc = new Scanner(System.in);
 
 	private static final int BOARD_MAX_SIZE = 1000;
 
-	
-	// 게시판 종류 메뉴 출력 
+	// 게시판 종류 메뉴 출력
 	public void printBoardType() {
 		System.out.println("\n==========게시판==========");
 		System.out.println("    1. 게시판");
@@ -21,8 +20,8 @@ public class BoardJob {
 		System.out.println("    99. 종료 ");
 		System.out.println("========================");
 	}
-	
-	// 업무 출력 
+
+	// 업무 출력
 	public void printMenu(int type) {
 		String boardTypeName = "";
 		switch (type) {
@@ -50,8 +49,8 @@ public class BoardJob {
 		System.out.println("========================");
 		System.out.println(boardTypeName + "> ");
 	}
-	
-	// 게시글 출력 
+
+	// 게시글 출력
 	public void printBoardList(BoardBasic[] boardList) {
 		int start = 0;
 		int pages = boardList.length / 10 - 1;
@@ -65,6 +64,8 @@ public class BoardJob {
 			if (p.equals("1")) {
 				System.out.println("1 게시글 조회를 선택하셨습니다.");
 				System.out.print("조회할 게시글 번호를 선택하세요.");
+				printBoard(boardList[stringToInt(sc.nextLine())]);
+				return;
 			} else if (p.equals("2")) {
 				System.out.println("2. 첫 페이지로 이동을 선택하셨습니다.");
 				start = 0;
@@ -79,7 +80,7 @@ public class BoardJob {
 			} else if (p.equals("5")) {
 				System.out.println("5. 다음 10개를 선택하셨습니다.");
 				if (start < pages) {
-					start+=10;
+					start += 10;
 				}
 			} else if (p.equals("6")) {
 				System.out.println("6. 마지막 페이지로 이동을 선택하셨습니다.");
@@ -90,71 +91,96 @@ public class BoardJob {
 			}
 		}
 	}
-	
-	// 게시글 삭제 
+
+	// 게시글 삭제
 	public BoardBasic[] removeOne(BoardBasic[] origin) {
+		if (origin.length == 0) { 
+			System.out.print("게시글을 먼저 등록해주세요.");
+			return new BoardBasic[0]; 
+		}
 		System.out.println();
 		System.out.print("삭제할 글의 인덱스를 입력하세요: ");
 		int idx = stringToInt(sc.nextLine()) - 1;
-		System.out.println(idx+"를 삭제합니다.");
+		System.out.println(idx + "를 삭제합니다.");
 		BoardBasic[] newBoard = new BoardBasic[origin.length - 1];
 		// 첫 번째 부분 복사 (idx 이전 요소들)
-	    System.arraycopy(origin, 0, newBoard, 0, idx);
-	    // 두 번째 부분 복사 (idx 이후 요소들)
-	    System.arraycopy(origin, idx + 1, newBoard, idx, origin.length - idx - 1);
+		System.arraycopy(origin, 0, newBoard, 0, idx);
+		// 두 번째 부분 복사 (idx 이후 요소들)
+		System.arraycopy(origin, idx + 1, newBoard, idx, origin.length - idx - 1);
 		System.out.println("삭제가 완료되었습니다.");
 		return newBoard;
 	}
+
 	public BoardNotice[] removeOne(BoardNotice[] origin) {
+		if (origin.length == 0) {
+			System.out.print("게시글을 먼저 등록해주세요.");
+			return new BoardNotice[0]; 
+		}
 		System.out.println();
 		System.out.print("삭제할 글의 인덱스를 입력하세요: ");
 		int idx = stringToInt(sc.nextLine()) - 1;
-		System.out.println(idx+"를 삭제합니다.");
+		System.out.println(idx + "를 삭제합니다.");
 		BoardNotice[] newBoardNotice = new BoardNotice[origin.length - 1];
 		// 첫 번째 부분 복사 (idx 이전 요소들)
-	    System.arraycopy(origin, 0, newBoardNotice, 0, idx);
-	    // 두 번째 부분 복사 (idx 이후 요소들)
-	    System.arraycopy(origin, idx + 1, newBoardNotice, idx, origin.length - idx - 1);
+		System.arraycopy(origin, 0, newBoardNotice, 0, idx);
+		// 두 번째 부분 복사 (idx 이후 요소들)
+		System.arraycopy(origin, idx + 1, newBoardNotice, idx, origin.length - idx - 1);
 		System.out.println("삭제가 완료되었습니다.");
 		return newBoardNotice;
 	}
+
 	public BoardEvent[] removeOne(BoardEvent[] origin) {
+		if (origin.length == 0) {
+			System.out.print("게시글을 먼저 등록해주세요.");
+			return new BoardEvent[0]; 
+		}
 		System.out.println();
 		System.out.print("삭제할 글의 인덱스를 입력하세요: ");
 		int idx = stringToInt(sc.nextLine()) - 1;
-		System.out.println(idx+"를 삭제합니다.");
+		System.out.println(idx + "를 삭제합니다.");
 		BoardEvent[] newBoard = new BoardEvent[origin.length - 1];
 		// 첫 번째 부분 복사 (idx 이전 요소들)
-	    System.arraycopy(origin, 0, newBoard, 0, idx);
-	    // 두 번째 부분 복사 (idx 이후 요소들)
-	    System.arraycopy(origin, idx + 1, newBoard, idx, origin.length - idx - 1);
+		System.arraycopy(origin, 0, newBoard, 0, idx);
+		// 두 번째 부분 복사 (idx 이후 요소들)
+		System.arraycopy(origin, idx + 1, newBoard, idx, origin.length - idx - 1);
 		System.out.println("삭제가 완료되었습니다.");
 		return newBoard;
 	}
-	
+
 	// 게시글 수정
-	public BoardBasic[] updateBasic(BoardBasic[] basics) {
-		Scanner sc = new Scanner(System.in);
+	public BoardBasic[] updateBasic(BoardBasic[] origin) {
+		if (origin.length == 0) { 
+			System.out.print("게시글을 먼저 등록해주세요.");
+			return new BoardBasic[0]; 
+		}
 		System.out.print("수정할 글의 인덱스를 입력하세요: ");
-		int idx = stringToInt(sc.nextLine());
-		basics[idx] = createBoardBasic();
-		return basics;
+		int idx = stringToInt(sc.nextLine()) - 1;
+		origin[idx] = createBoardBasic();
+		return origin;
 	}
-	public BoardNotice[] updateBasic(BoardNotice[] basics) {
-		Scanner sc = new Scanner(System.in);
+
+	public BoardNotice[] updateBasic(BoardNotice[] origin) {
+		if (origin.length == 0) { 
+			System.out.print("게시글을 먼저 등록해주세요.");
+			return new BoardNotice[0]; 
+		}
 		System.out.print("수정할 글의 인덱스를 입력하세요: ");
-		int idx = stringToInt(sc.nextLine());
-		basics[idx] = createBoardNotice();
-		return basics;
+		int idx = stringToInt(sc.nextLine()) - 1;
+		origin[idx] = createBoardNotice();
+		return origin;
 	}
-	public BoardEvent[] updateBasic(BoardEvent[] basics) {
-		Scanner sc = new Scanner(System.in);
+
+	public BoardEvent[] updateBasic(BoardEvent[] origin) {
+		if (origin.length == 0) { 
+			System.out.print("게시글을 먼저 등록해주세요.");
+			return new BoardEvent[0]; 
+		}
 		System.out.print("수정할 글의 인덱스를 입력하세요: ");
-		int idx = stringToInt(sc.nextLine());
-		basics[idx] = createBoardEvent();
-		return basics;
+		int idx = stringToInt(sc.nextLine()) - 1;
+		origin[idx] = createBoardEvent();
+		return origin;
 	}
-	
+
 	// 게시글 배열에 게시글 추가
 	public BoardBasic[] createBoardBasicList(BoardBasic[] oldBoardBasic) {
 		int size = oldBoardBasic.length;
@@ -162,18 +188,21 @@ public class BoardJob {
 		newArrBoardBasic[size] = createBoardBasic();
 		return newArrBoardBasic;
 	}
+
 	public BoardEvent[] createBoardEventList(BoardEvent[] oldBoardEvent) {
 		int size = oldBoardEvent.length;
 		BoardEvent[] newArrBoardEvent = Arrays.copyOf(oldBoardEvent, size + 1);
 		newArrBoardEvent[size] = createBoardEvent();
 		return newArrBoardEvent;
 	}
+
 	public BoardNotice[] createBoardNoticeList(BoardNotice[] oldBoardNotice) {
 		int size = oldBoardNotice.length;
 		BoardNotice[] newArrBoardNotice = Arrays.copyOf(oldBoardNotice, size + 1);
 		newArrBoardNotice[size] = createBoardNotice();
 		return newArrBoardNotice;
 	}
+
 	public BoardBasic[] createBoardBasicList() {
 		BoardBasic[] bb = new BoardBasic[BOARD_MAX_SIZE];
 		for (int i = 0; i < BOARD_MAX_SIZE; i++) {
@@ -181,6 +210,7 @@ public class BoardJob {
 		}
 		return bb;
 	}
+
 	public BoardEvent[] createBoardEventList() {
 		BoardEvent[] bb = new BoardEvent[BOARD_MAX_SIZE];
 		for (int i = 0; i < BOARD_MAX_SIZE; i++) {
@@ -188,6 +218,7 @@ public class BoardJob {
 		}
 		return bb;
 	}
+
 	public BoardNotice[] createBoardNoticeList() {
 		BoardNotice[] bb = new BoardNotice[BOARD_MAX_SIZE];
 		for (int i = 0; i < BOARD_MAX_SIZE; i++) {
@@ -196,9 +227,8 @@ public class BoardJob {
 		return bb;
 	}
 
-	
 	/// helper methods
-	
+
 	// 페이지에 따른 게시글 출력 메서드
 	private void printBoardListOnly(BoardBasic[] boardList, int start, int pages) {
 		String[] headers = { "No", "idx", "제목", "이름", "등록일", "이벤트날짜", "첨부파일명" };
@@ -224,8 +254,8 @@ public class BoardJob {
 			if (boardList[0] instanceof BoardEvent) {
 				BoardEvent notice = (BoardEvent) boardList[i];
 				System.out.printf("  %-10s", notice.getEventDate());
-			} 
-			
+			}
+
 		}
 
 		System.out.println("\n*********************************************************************");
@@ -235,16 +265,44 @@ public class BoardJob {
 			if (i == start) {
 				// System.out.print("'"+ i+1 + "'"); 문자열 다음 숫자는 문자열숫자
 				System.out.print(" '");
-				System.out.print(i+1);
+				System.out.print(i + 1);
 				System.out.print("' ");
 			} else {
-				System.out.print(i+1 + " ");
+				System.out.print(i + 1 + " ");
 			}
 		}
 		System.out.print("  >        >>");
 	}
-	
-	// 게시글 1개 생성 관련 helper 메서드 
+
+	private void printBoard(BoardBasic board) {
+		String[] headers = { "No", "idx", "제목", "이름", "등록일", "이벤트날짜", "첨부파일명" };
+		if (board instanceof BoardNotice) {
+			System.out.printf("  %-5s |  %-5s |  %-20s |  %-10s |  %-10s |  %-10s\n", headers[0], headers[1],
+					headers[2], headers[3], headers[4], headers[6]);
+		} else if (board instanceof BoardEvent) {
+			System.out.printf("  %-5s |  %-5s |  %-20s |  %-10s |  %-10s |  %-10s\n", headers[0], headers[1],
+					headers[2], headers[3], headers[4], headers[5]);
+		} else {
+			System.out.printf("  %-5s |  %-5s |  %-20s |  %-10s |  %-10s \n", headers[0], headers[1], headers[2],
+					headers[3], headers[4]);
+		}
+		System.out.print("*********************************************************************");
+
+		System.out.printf("\n  %-5d |  %-5d |  %-20s |  %-10s |  %-10s|", board.getNo(), board.getIdx(), board.getTitle(),
+				board.getName(), board.getRegDate());
+
+		if (board instanceof BoardNotice) {
+			BoardNotice notice = (BoardNotice) board;
+			System.out.printf("  %-10s", notice.getNoticeFile());
+		}
+		if (board instanceof BoardEvent) {
+			BoardEvent notice = (BoardEvent) board;
+			System.out.printf("  %-10s", notice.getEventDate());
+		}
+
+	}
+
+	// 게시글 1개 생성 관련 helper 메서드
 	private BoardBasic createBoardBasic() {
 		System.out.print("1. 제목: ");
 		boardTemp[0] = sc.nextLine();
@@ -255,20 +313,42 @@ public class BoardJob {
 		BoardBasic bb = new BoardBasic(boardTemp[0], boardTemp[1], boardTemp[2]);
 		return bb;
 	}
+
 	private BoardNotice createBoardNotice() {
-		BoardNotice bn = (BoardNotice) createBoardBasic();
+//		BoardNotice bn = (BoardNotice) createBoardBasic();
+//		System.out.print("4. 첨부파일명: ");
+//		bn.setNoticeFile(sc.nextLine());
+//		return bn;
+		System.out.print("1. 제목: ");
+		boardTemp[0] = sc.nextLine();
+		System.out.print("2. 이름: ");
+		boardTemp[1] = sc.nextLine();
+		System.out.print("3. 등록일: ");
+		boardTemp[2] = sc.nextLine();
 		System.out.print("4. 첨부파일명: ");
-		bn.setNoticeFile(sc.nextLine());
+		boardTemp[3] = sc.nextLine();
+		BoardNotice bn = new BoardNotice(boardTemp[0], boardTemp[1], boardTemp[2], boardTemp[3]);
 		return bn;
 	}
+
 	private BoardEvent createBoardEvent() {
-		BoardEvent be = (BoardEvent) createBoardBasic();
+//		BoardEvent be = (BoardEvent) createBoardBasic();
+//		System.out.print("4. 이벤트 날짜: ");
+//		be.setEventDate(sc.nextLine());
+//		return be;
+		System.out.print("1. 제목: ");
+		boardTemp[0] = sc.nextLine();
+		System.out.print("2. 이름: ");
+		boardTemp[1] = sc.nextLine();
+		System.out.print("3. 등록일: ");
+		boardTemp[2] = sc.nextLine();
 		System.out.print("4. 이벤트 날짜: ");
-		be.setEventDate(sc.nextLine());
+		boardTemp[3] = sc.nextLine();
+		BoardEvent be = new BoardEvent(boardTemp[0], boardTemp[1], boardTemp[2], boardTemp[3]);
 		return be;
 	}
-	
-	// 숫자 문자열을 int로 바꾸는 메서드 
+
+	// 숫자 문자열을 int로 바꾸는 메서드
 	int stringToInt(String str) {
 		try {
 			return Integer.parseInt(str);
@@ -277,5 +357,5 @@ public class BoardJob {
 			return 0;
 		}
 	}
-	
+
 }
